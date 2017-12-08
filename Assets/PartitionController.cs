@@ -9,6 +9,7 @@ public class PartitionController : MonoBehaviour {
     public float timeref;
     public Text timerText;
     public int index = 0;
+	public GameController gameController;
 
     private float startTimer;
 
@@ -107,6 +108,9 @@ public class PartitionController : MonoBehaviour {
             {
                 Debug.Log("Notetime : " + notetime[index] + " Notekey : " + notekey[index] + " Time : " + t);
                 ++index;
+
+				//On fait spawn la note au bon endroit (note1, note2, note3, note4)
+				gameController.spawnNote (notekey[index]);
             }
         }
     }
