@@ -11,17 +11,28 @@ public class PartitionController : MonoBehaviour {
     public int index = 0;
 	public GameController gameController;
 
+	private float interval = 1f;
     private float startTimer;
 
     List<float> notetime;
     List<float> notekey;
 
+	List<float> verifnoteA;
+	List<float> verifnoteB;
+	List<float> verifnoteC;
+	List<float> verifnoteD;
+
     // Use this for initialization
     void Start () {
 
         float nbmeasure;
-        float timer = 0f;
+        float timer = 5f;
         float division = 2f;
+
+		verifnoteA = new List<float>();
+		verifnoteB = new List<float>();
+		verifnoteC = new List<float>();
+		verifnoteD = new List<float>();
 
         startTimer = Time.time;
 
@@ -91,10 +102,13 @@ public class PartitionController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         float t = Time.time - startTimer;
+		float timerScreen = Time.time - startTimer;
         int nbNote = notetime.Count;
 
-        string minutes = ((int) t / 60).ToString();
-        string seconds = (t % 60).ToString("f2");
+		t = t + 2;
+
+		string minutes = ((int) timerScreen / 60).ToString();
+		string seconds = (timerScreen % 60).ToString("f2");
 
         //Affichage du timer en jeu
         timerText.text = minutes + "." + seconds;
@@ -111,7 +125,89 @@ public class PartitionController : MonoBehaviour {
 
 				//On fait spawn la note au bon endroit (note1, note2, note3, note4)
 				gameController.spawnNote (notekey[index]);
+
+				if (notekey[index] == 1)
+				{
+					verifnoteA.Add (notetime[index]);
+				}
+				else if (notekey[index] == 2) {
+					verifnoteB.Add (notetime[index]);
+				}
+				else if (notekey[index] == 3) {
+					verifnoteC.Add (notetime[index]);
+				}
+				else if (notekey[index] == 4) {
+					verifnoteD.Add (notetime[index]);
+				}
+
+				if (verifnoteA.Count > 0) {
+					if (verifnoteA[0] > t + interval) {
+						verifnoteA.RemoveAt (0);
+					}
+				}
+
+				if (verifnoteB.Count > 0) {
+					if (verifnoteB[0] > t + interval) {
+						verifnoteB.RemoveAt (0);
+					}
+				}
+
+				if (verifnoteC.Count > 0) {
+					if (verifnoteC[0] > t + interval) {
+						verifnoteC.RemoveAt (0);
+					}
+				}
+
+				if (verifnoteD.Count > 0) {
+					if (verifnoteD[0] > t + interval) {
+						verifnoteD.RemoveAt (0);
+					}
+				}
             }
         }
     }
+
+	public void checkKey(float notekey)
+	{
+		float t = Time.time - startTimer;
+
+		//print("space " + notekey + " was pressed");
+
+		//On check si la note est comprise dans un interval d'une seconde pour valider le point au joueur
+		if (notekey == 1) {
+			if (verifnoteA.Count > 0) {
+				if (verifnoteA [0] >= t - interval || verifnoteA[0] <= t + interval) {
+					print ("+ 1 point : " + verifnoteA[0] + " interval : " + t);
+					verifnoteA.RemoveAt (0);
+				}
+			}
+		}
+
+		if (notekey == 2) {
+			if (verifnoteB.Count > 0) {
+				if (verifnoteB [0] >= t - interval || verifnoteB [0] <= t + interval) {
+					print ("+ 1 point : " + verifnoteB[0] + " interval : " + t);
+					verifnoteB.RemoveAt (0);
+				}
+			}
+		}
+
+		if (notekey == 3) {
+			if (verifnoteC.Count > 0) {
+				if (verifnoteC [0] >= t - interval || verifnoteC [0] <= t + interval) {
+					print ("+ 1 point : " + verifnoteC[0] + " interval : " + t);
+					verifnoteC.RemoveAt (0);
+				}
+			}
+		}
+
+		if (notekey == 4) {
+			if (verifnoteD.Count > 0) {
+				if (verifnoteD [0] >= t - interval || verifnoteD [0] <= t + interval) {
+					print ("+ 1 point : " + verifnoteD[0] + " interval : " + t);
+					verifnoteD.RemoveAt (0);
+				}
+			}
+		}
+	}
 }

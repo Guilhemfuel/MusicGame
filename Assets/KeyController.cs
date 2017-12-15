@@ -4,6 +4,8 @@ using UnityEngine;
 
 public class KeyController : MonoBehaviour {
 
+	public PartitionController partitionController;
+
 	// Use this for initialization
 	void Start () {
 		
@@ -12,19 +14,19 @@ public class KeyController : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 		if (Input.GetKeyDown(KeyCode.A)) {
-			print("space A was pressed");
+			partitionController.checkKey (1);
 		}
 
 		if (Input.GetKeyDown (KeyCode.Z)) {
-			print("space Z was pressed");
+			partitionController.checkKey (2);
 		}
 
 		if (Input.GetKeyDown (KeyCode.E)) {
-			print("space E was pressed");
+			partitionController.checkKey (3);
 		}
 
 		if (Input.GetKeyDown (KeyCode.R)) {
-			print("space R was pressed");
+			partitionController.checkKey (4);
 		}
 	}
 }
