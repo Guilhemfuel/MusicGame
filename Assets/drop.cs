@@ -11,20 +11,15 @@ public class drop : MonoBehaviour {
 	private Vector3 EndPosition;
 
 	private float Timer;
-	private float TimeToFall = 1f;
-
-
+	private float TimeToFall = 2f;
 
 	// Use this for initialization
 	void Start () {
 		Camera cam = Camera.main;
 		float height = 2f * cam.orthographicSize;
 
-		print (height * 0.8f);
-		print (Vector3.down * 10);
-
 		startPosition = transform.position;
-		EndPosition = startPosition + Vector3.down * 10;
+		EndPosition = startPosition + Vector3.down * height;
 	}
 	
 	// Update is called once per frame
